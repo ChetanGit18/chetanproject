@@ -1,0 +1,9 @@
+{
+	"name": "chetandatafactory-dev",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "f737ca89-4e5b-40af-b700-488ccb92a5a5",
+		"tenantId": "9e52ffe6-0a55-444f-9bc2-77e97a4a74c1"
+	}
+}
