@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Get MetadataFileName",
+				"name": "Get Metadata File Name",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -16,10 +16,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "dd_dynamic_file_in_a_day",
+						"referenceName": "ds_dynamic_file_in_a_day",
 						"type": "DatasetReference"
 					},
-					"fieldList": [],
+					"fieldList": [
+						"itemName"
+					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"enablePartitionDiscovery": false
