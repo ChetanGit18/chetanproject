@@ -86,11 +86,74 @@
 									"type": "DelimitedTextReadSettings"
 								}
 							}
+						},
+						{
+							"name": "If Condition1",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "Get Metadata LastModifiedDate",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@greater(activity('Get Metadata LastModifiedDate').output.lastModified, variables('var_oldmodifieddate'))",
+									"type": "Expression"
+								},
+								"ifTrueActivities": [
+									{
+										"name": "Set variable Filename",
+										"type": "SetVariable",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "var_filename",
+											"value": {
+												"value": "@activity('Get Metadata LastModifiedDate').output.itemName",
+												"type": "Expression"
+											}
+										}
+									}
+								]
+							}
+						},
+						{
+							"name": "Set variable LastModified",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "If Condition1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "var_oldmodifieddate",
+								"value": {
+									"value": "@activity('Get Metadata LastModifiedDate').output.lastModified",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
 			}
 		],
+		"variables": {
+			"var_filename": {
+				"type": "String"
+			},
+			"var_oldmodifieddate": {
+				"type": "String",
+				"defaultValue": "2020-03-26T02:48:17Z"
+			}
+		},
 		"annotations": []
 	}
 }
