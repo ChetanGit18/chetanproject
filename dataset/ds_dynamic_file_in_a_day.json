@@ -1,5 +1,5 @@
 {
-	"name": "dd_dynamic_file_in_a_day",
+	"name": "ds_dynamic_file_in_a_day",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "lnk_storage",
@@ -12,11 +12,20 @@
 				"type": "AzureBlobStorageLocation",
 				"container": "import"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": ";",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "ID",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			}
+		]
 	}
 }
