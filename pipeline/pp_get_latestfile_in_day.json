@@ -46,7 +46,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata File Name').output",
+						"value": "@activity('Get Metadata File Name').output.childItems",
 						"type": "Expression"
 					},
 					"isSequential": true,
@@ -69,12 +69,15 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"currentfilename": {
-											"value": "@item()",
+											"value": "@item().Name",
 											"type": "Expression"
 										}
 									}
 								},
-								"fieldList": [],
+								"fieldList": [
+									"itemName",
+									"lastModified"
+								],
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"enablePartitionDiscovery": false
