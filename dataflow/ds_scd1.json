@@ -28,8 +28,8 @@
 			],
 			"scriptLines": [
 				"source(output(",
-				"          ID as integer,",
-				"          Name as string",
+				"          id as string,",
+				"          name as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -45,14 +45,14 @@
 				"     insertable:false,",
 				"     updateable:false,",
 				"     upsertable:true,",
-				"     keys:['ID'],",
+				"     keys:['id'],",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          id = ID,",
-				"          names = Name",
+				"          id,",
+				"          names = name",
 				"     )) ~> sink1"
 			]
 		}
