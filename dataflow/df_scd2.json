@@ -10,6 +10,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "txtfile"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_emp_table",
+						"type": "DatasetReference"
+					},
+					"name": "sqltabel"
 				}
 			],
 			"sinks": [
@@ -24,6 +31,12 @@
 			"transformations": [
 				{
 					"name": "AddIsActiveFlag"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "lookup1"
 				}
 			],
 			"scriptLines": [
@@ -34,7 +47,28 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> txtfile",
+				"source(output(",
+				"          id as integer,",
+				"          names as string,",
+				"          eid as integer,",
+				"          IsActive as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> sqltabel",
 				"txtfile derive(IsActive = 1) ~> AddIsActiveFlag",
+				"sqltabel select(mapColumn(",
+				"          sid = id,",
+				"          snames = names,",
+				"          seid = eid,",
+				"          sIsActive = IsActive",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"txtfile, select1 lookup(id == sid,",
+				"     multiple: true,",
+				"     broadcast: 'auto')~> lookup1",
 				"AddIsActiveFlag sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
