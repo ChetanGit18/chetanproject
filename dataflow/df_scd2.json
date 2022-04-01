@@ -12,8 +12,20 @@
 					"name": "txtfile"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_emp_table",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AddIsActiveFlag"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          id as string,",
@@ -21,7 +33,29 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> txtfile"
+				"     ignoreNoFilesFound: false) ~> txtfile",
+				"txtfile derive(IsActive = 1) ~> AddIsActiveFlag",
+				"AddIsActiveFlag sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          id as integer,",
+				"          names as string,",
+				"          eid as integer,",
+				"          IsActive as boolean",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          id,",
+				"          names = name,",
+				"          IsActive",
+				"     )) ~> sink1"
 			]
 		}
 	}
